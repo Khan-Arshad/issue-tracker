@@ -79,8 +79,8 @@ const AddIssue = () => {
 
   return (
     <div className="">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4  mr-2 flex flex-col sm:flex-row">
-        <div className="mb-4  mr-2">
+      <form className="bg-white shadow-md rounded px-8 py-4 mb-4 flex flex-col sm:flex-row justify-between">
+        <div className="mb-4 sm:mb-0 mx-1">
           <label className="text-gray-700 text-sm font-bold mb-2">
             Title:
             <input
@@ -91,7 +91,7 @@ const AddIssue = () => {
             />
           </label>
         </div>
-        <div className="mb-4  mr-2">
+        <div className="mb-4 sm:mb-0 mx-1">
           <label className="text-gray-700 text-sm font-bold mb-2">
             Location:
             <input
@@ -102,7 +102,7 @@ const AddIssue = () => {
             />
           </label>
         </div>
-        <div className="mb-4  mr-2">
+        <div className="mb-4 sm:mb-0 mx-1">
           <label className="text-gray-700 text-sm font-bold mb-2">
             Description:
             <input
@@ -113,12 +113,12 @@ const AddIssue = () => {
             />
           </label>
         </div>
-        <div className="mb-4  mr-2">
-          <label className=" text-gray-700 text-sm font-bold mb-2 pr-20">
-            Issue Priority:
+        <div className="mb-4 sm:mb-0 mx-1 flex sm:flex-col justify-between sm:justify-around">
+          <label className=" sm:block text-gray-700 text-sm font-bold mb-1 ">
+            Priority:
           </label>
           <select
-            className="text-white bg-gray-700 py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+            className="text-white bg-gray-700 py-1 px-1 rounded focus:outline-none focus:shadow-outline"
             value={issuePriority}
             onChange={handlePriorityChange}
           >
@@ -136,16 +136,16 @@ const AddIssue = () => {
             </option>
           </select>
         </div>
-        <div className="mb-4  mr-2">
+        <div className="mb-4 sm:mb-0 mx-1 flex justify-center items-center">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-8 rounded focus:outline-none focus:shadow-outline"
             type="submit"
             onClick={(e) => {
               e.preventDefault();
               handleClick();
             }}
           >
-            Add Issue
+            Add
           </button>
         </div>
       </form>

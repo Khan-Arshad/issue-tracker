@@ -53,7 +53,7 @@ const UpdateIssues = ({
     console.log("Issue deleted");
   };
 
-  // This will show the Cofirmation Box
+  // This will show the Confirmation Box
 
   const handleDelete = () => {
     setPopup({
@@ -62,7 +62,7 @@ const UpdateIssues = ({
     });
   };
 
-  // This will perform the deletion and hide the Confirmation Box
+  // This will perform run delete and hide the Confirmation Box
 
   const handleDeleteTrue = () => {
     if (popup.show && popup.id) {

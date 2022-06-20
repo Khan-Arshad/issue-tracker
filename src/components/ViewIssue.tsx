@@ -2,40 +2,29 @@ import { useState, useEffect } from "react";
 import { ref, onValue } from "firebase/database";
 import { database } from "../firebase";
 import UpdateIssues from "./UpdateIssues";
+import { date, priorityRating } from "../functions/functions";
+import IssueTagToggle from "./issueTagToggle";
 
 const ViewIssue = () => {
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>([]);
+  const [issues, setIssues] = useState<any>([]);
+  const [filter, setFilter] = useState<string>("all");
 
   const fetchData = () => {
     const issuesRef = ref(database, "issues");
     onValue(issuesRef, (snapshot) => {
       if (snapshot.exists()) {
         const issue = snapshot.val();
-        console.log(issue);
+        console.log(`View issues is ${JSON.stringify(issue)}`);
         const issues = Object.values(issue) || [];
         setData(issues);
-        console.log(data);
+        setIssues(issues);
+        console.log(`ViewIssue data is ${data}`);
       } else {
         setData([]);
         console.log("No data available");
       }
     });
-  };
-
-  const priorityRating = (priority: string) => {
-    if (priority === "High") {
-      return <span className="text-red-500">{priority}</span>;
-    } else if (priority === "Medium") {
-      return <span className="text-orange-500">{priority}</span>;
-    } else {
-      return <span className="text-green-500">{priority}</span>;
-    }
-  };
-
-  const date = (createdAt: string) => {
-    const dateObj = new Date(createdAt);
-    const dateString = dateObj.toLocaleDateString();
-    return dateString;
   };
 
   useEffect(() => {
@@ -44,12 +33,19 @@ const ViewIssue = () => {
   }, []);
 
   return (
-    <div className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col sm:flex-row">
+    <div className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col ">
+      <IssueTagToggle
+        data={data}
+        setFilter={setFilter}
+        filter={filter}
+        issues={issues}
+        setIssues={setIssues}
+      />
       <ul>
-        {!data ? (
+        {!issues ? (
           <></>
         ) : (
-          data.map(
+          issues.map(
             ({
               id,
               title,
