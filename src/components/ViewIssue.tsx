@@ -18,7 +18,6 @@ const ViewIssue = () => {
         console.log(`View issues is ${JSON.stringify(issue)}`);
         const issues = Object.values(issue) || [];
         setData(issues);
-        setIssues(issues);
         console.log(`ViewIssue data is ${data}`);
       } else {
         setData([]);

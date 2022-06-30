@@ -56,7 +56,7 @@ const UpdateIssues = ({
     console.log("Issue deleted");
   };
 
-  // This will show the Confirmation Box
+  // Show the Confirmation Box
 
   const handleDelete = () => {
     setPopup({
@@ -65,7 +65,7 @@ const UpdateIssues = ({
     });
   };
 
-  // This will perform run delete and hide the Confirmation Box
+  // Run delete and hide the Confirmation Box
 
   const handleDeleteTrue = () => {
     if (popup.show && popup.id) {
@@ -77,7 +77,7 @@ const UpdateIssues = ({
     }
   };
 
-  // This will just hide the Confirmation Box when user clicks "No"/"Cancel"
+  // Hide the Confirmation Box when user clicks "No"/"Cancel"
 
   const handleDeleteFalse = () => {
     setPopup({
