@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, useState, SetStateAction } from "react";
 import { ref, update, remove } from "firebase/database";
 import { database } from "../firebase";
 import DeleteConfirmation from "./DeleteConfirmation";
@@ -8,11 +8,13 @@ const UpdateIssues = ({
   inProgress,
   resolved,
   priority,
+  setFilter,
 }: {
   id: string;
   priority: string;
   inProgress: boolean;
   resolved: boolean;
+  setFilter: Dispatch<SetStateAction<any>>;
 }) => {
   const [popup, setPopup] = useState<any>({
     show: false,
@@ -50,6 +52,7 @@ const UpdateIssues = ({
 
   const deleteIssue = () => {
     remove(ref(database, "issues/" + IssueId));
+    setFilter("all");
     console.log("Issue deleted");
   };
 

@@ -42,6 +42,7 @@ const IssueTagToggle = ({
   };
 
   useEffect(() => {
+    setFilter(value);
     if (value === "all") {
       setIssues(data);
       console.log(issues);
@@ -54,7 +55,7 @@ const IssueTagToggle = ({
 
     console.log(`Toggle value is ${value}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [filter]);
 
   return (
     <div className="flex py-2">

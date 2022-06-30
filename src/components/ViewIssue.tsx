@@ -83,6 +83,7 @@ const ViewIssue = () => {
                   inProgress={inProgress}
                   resolved={resolved}
                   priority={priority}
+                  setFilter={setFilter}
                 />
               </li>
             )
