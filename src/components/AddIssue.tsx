@@ -112,6 +112,7 @@ const AddIssue = () => {
             <option
               className="bg-orange-700 hover:bg-orange-700"
               value="Medium"
+              selected  
             >
               Medium
             </option>
