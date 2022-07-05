@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ref, onValue } from "firebase/database";
 import { database } from "../firebase";
 import UpdateIssues from "./UpdateIssues";
-import { date, priorityRating } from "../functions/functions";
+import { date, priorityRating, statusRating } from "../functions/functions";
 import IssueTagToggle from "./issueTagToggle";
 
 const ViewIssue = () => {
@@ -32,7 +32,7 @@ const ViewIssue = () => {
   }, []);
 
   return (
-    <div className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col ">
+    <div className=" bg-white shadow-md rounded p-8 mb-4 flex flex-col ">
       <IssueTagToggle
         data={data}
         setFilter={setFilter}
@@ -40,7 +40,7 @@ const ViewIssue = () => {
         issues={issues}
         setIssues={setIssues}
       />
-      <ul>
+      <ul className=" border-t-4 border-gray-500">
         {!issues ? (
           <></>
         ) : (
@@ -52,8 +52,7 @@ const ViewIssue = () => {
               priority,
               description,
               createdAt,
-              inProgress,
-              resolved,
+              status,
             }: {
               id: string;
               title: string;
@@ -61,29 +60,40 @@ const ViewIssue = () => {
               priority: string;
               description: string;
               createdAt: string;
-              inProgress: boolean;
-              resolved: boolean;
+              status: string;
             }) => (
               <li
                 key={id}
-                className="text-gray-700 text-sm font-bold mb-2 border-b border-gray-500"
+                className="text-gray-700 text-sm font-bold mb-2 border-b-4 border-gray-500"
               >
-                <div className="flex-row">
-                  <h1 className="sm:inline pr-4">Title: {title}</h1>
-                  <h1 className="sm:inline pr-4">Location: {location}</h1>
-                  <h1 className="sm:inline pr-4">
-                    Priority: {priorityRating(priority)}
-                  </h1>
-                  <h1 className="sm:inline pr-4">Date: {date(createdAt)}</h1>
+                <div className=" flex flex-row justify-between">
+                  <div className="flex flex-col justify-between">
+                    <h1 className="pr-4">Title: {title}</h1>
+                    <h1 className="pr-4">Location: {location}</h1>
+                    <h1 className="pr-4 border-b border-gray-500">
+                      Description: {description}
+                    </h1>
+                    <div>
+                      <h1 className="sm:inline pr-4">
+                        Date: {date(createdAt)}
+                      </h1>
+                      <h1 className="sm:inline pr-4">
+                        Priority: {priorityRating(priority)}
+                      </h1>
+                      <h1 className="sm:inline pr-4">
+                        Status: {statusRating(status)}
+                      </h1>
+                    </div>
+                  </div>
+                  <div>
+                    <UpdateIssues
+                      id={id}
+                      status={status}
+                      priority={priority}
+                      setFilter={setFilter}
+                    />
+                  </div>
                 </div>
-                <h1>Description: {description}</h1>
-                <UpdateIssues
-                  id={id}
-                  inProgress={inProgress}
-                  resolved={resolved}
-                  priority={priority}
-                  setFilter={setFilter}
-                />
               </li>
             )
           )

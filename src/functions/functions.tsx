@@ -12,6 +12,18 @@ export const priorityRating = (priority: string) => {
   }
 };
 
+// Status rating function
+
+export const statusRating = (priority: string) => {
+  if (priority === "Resolved") {
+    return <span className="text-green-500">{priority}</span>;
+  } else if (priority === "In Progress") {
+    return <span className="text-orange-500">{priority}</span>;
+  } else {
+    return <span className="text-gray-500">{priority}</span>;
+  }
+};
+
 // Date function
 
 export const date = (createdAt: string) => {

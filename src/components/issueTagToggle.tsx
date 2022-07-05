@@ -55,7 +55,7 @@ const IssueTagToggle = ({
 
     console.log(`Toggle value is ${value}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]);
+  }, [filter, data]);
 
   return (
     <div className="flex py-2">

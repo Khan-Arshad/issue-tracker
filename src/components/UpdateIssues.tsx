@@ -1,21 +1,22 @@
-import React, { Dispatch, useState, SetStateAction } from "react";
+import React, { Dispatch, useState, useEffect, SetStateAction } from "react";
 import { ref, update, remove } from "firebase/database";
 import { database } from "../firebase";
 import DeleteConfirmation from "./DeleteConfirmation";
 
+
 const UpdateIssues = ({
   id,
-  inProgress,
-  resolved,
+  status,
   priority,
   setFilter,
 }: {
   id: string;
+  status: string;
   priority: string;
-  inProgress: boolean;
-  resolved: boolean;
   setFilter: Dispatch<SetStateAction<any>>;
 }) => {
+  const [issueStatus, setIssueStatus] = useState<string>("Open");
+  const [issuePriority, setIssuePriority] = useState<string>(priority);
   const [popup, setPopup] = useState<any>({
     show: false,
     id: null,
@@ -23,29 +24,17 @@ const UpdateIssues = ({
 
   const IssueId = id;
 
-  // Progress
+  // Status
 
-  const updateProgress = () => {
-    update(ref(database, "issues/" + id), {
-      inProgress: !inProgress,
-    });
-    console.log("Issue Progress updated");
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    setIssueStatus(e.target.value);
   };
 
-  const handleProgress = () => {
-    updateProgress();
-  };
-
-  // Resolved
-
-  const updateResolved = () => {
-    update(ref(database, "issues/" + id), {
-      resolved: !resolved,
-    });
-    console.log("Issue Resolved updated");
-  };
-  const handleResolved = () => {
-    updateResolved();
+  // Priority
+  const handlePriorityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    setIssuePriority(e.target.value);
   };
 
   //   Delete
@@ -86,44 +75,56 @@ const UpdateIssues = ({
     });
   };
 
+  useEffect(() => {
+    const priorityChange = () => {
+      update(ref(database, "issues/" + id), {
+        priority: issuePriority,
+      });
+    };
+    const statusChange = () => {
+      update(ref(database, "issues/" + id), {
+        status: issueStatus,
+      });
+    };
+
+    statusChange();
+
+    priorityChange();
+  }, [issuePriority, issueStatus, id]);
+
   return (
-    <div>
-      {inProgress && !resolved ? (
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 m-2 rounded focus:outline-none focus:shadow-outline px-2"
-          onClick={handleProgress}
-        >
+    <div className=" flex flex-col">
+      <select
+        className="text-white text-sm bg-gray-700 py-1 px-1 m-2 rounded focus:outline-none focus:shadow-outline"
+        value={issueStatus}
+        onChange={handleStatusChange}
+      >
+        <option className="" value="Open">
+        Open
+        </option>
+        <option className="" value="In Progress">
           In Progress
-        </button>
-      ) : !inProgress && !resolved ? (
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 m-2 rounded focus:outline-none focus:shadow-outline px-2"
-          onClick={handleProgress}
-        >
-          Not in Progress
-        </button>
-      ) : (
-        <></>
-      )}
+        </option>
+        <option className="" value="Resolved">
+          Resolved
+        </option>
+      </select>
 
-      {resolved && inProgress ? (
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 m-2 rounded focus:outline-none focus:shadow-outline px-2"
-          onClick={handleResolved}
-        >
-          Unmark
-        </button>
-      ) : !resolved && inProgress ? (
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 m-2 rounded focus:outline-none focus:shadow-outline px-2"
-          onClick={handleResolved}
-        >
-          Mark as done
-        </button>
-      ) : (
-        <></>
-      )}
-
+      <select
+        className="text-white bg-gray-700 m-2 py-1 px-1 rounded focus:outline-none focus:shadow-outline"
+        value={issuePriority}
+        onChange={handlePriorityChange}
+      >
+        <option className="" value="Low">
+          Low
+        </option>
+        <option className="" value="Medium">
+          Medium
+        </option>
+        <option className="" value="High">
+          High
+        </option>
+      </select>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 m-2 rounded focus:outline-none focus:shadow-outline px-2"
         onClick={() => handleDelete()}
