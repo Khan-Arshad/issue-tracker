@@ -105,9 +105,6 @@ const AddIssue = () => {
             value="Priority"
             onChange={handlePriorityChange}
           >
-            <option className="text-white bg-gray-700" value="none" disabled>
-              Issue Priority
-            </option>
             <option className="bg-blue-700 hover:bg-blue-700" value="Low">
               Low
             </option>
