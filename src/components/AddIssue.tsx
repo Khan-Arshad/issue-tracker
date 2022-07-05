@@ -104,6 +104,7 @@ const AddIssue = () => {
             className="text-white bg-gray-700 py-1 px-1 my-2 rounded focus:outline-none focus:shadow-outline"
             value="Priority"
             onChange={handlePriorityChange}
+            defaultValue="Medium"
           >
             <option className="bg-blue-700 hover:bg-blue-700" value="Low">
               Low
